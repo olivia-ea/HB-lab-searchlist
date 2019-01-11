@@ -14,10 +14,17 @@ def unique_houses(filename):
 
     """
 
+
     houses = set()
-
-    # Code goes here
-
+    the_data = open(filename)
+    for line in the_data:
+        new_list = line.split("|")
+        house = new_list[2]
+        if len(house) > 0:
+            houses.add(house)
+  
+    # houses = {house.add(house) for house in houses if len(house) > 0}
+    # houses_list_comp = {houses.add(house) }
     return houses
 
 
@@ -42,7 +49,29 @@ def sort_by_cohort(filename):
     fall_15 = []
     ghosts = []
 
-    # Code goes here
+    # Attempted conditonal with cohort != I but was not able to properly seperate between ghosts and instructors
+    the_data = open(filename)
+    for line in the_data:
+        new_list = line.split("|")
+        student = ' '.join(new_list[0:2])
+        cohort = new_list[4]
+        if cohort != "I":
+            if cohort.upper()[0:2] == "WI":
+                winter_16.append(student)
+            elif cohort.upper()[0:2] == "SP":
+                spring_16.append(student)
+            elif cohort.upper()[0:2] == "SU":
+                summer_16.append(student)
+            elif cohort.upper()[0:2] == "FA":
+                fall_15.append(student)
+            elif cohort.upper()[0:1] == "G":
+                ghosts.append(student)
+            else:
+                pass
+        else:
+            pass
+
+    all_students = [fall_15, winter_16,spring_16, summer_16, ghosts]
 
     return all_students
 
@@ -70,7 +99,36 @@ def hogwarts_by_house(filename):
     ghosts = []
     instructors = []
 
-    # Code goes here
+    the_data = open(filename)
+    for line in the_data:
+        line = line.rstrip()
+        new_list = line.split("|")
+        last_name = new_list[1]
+        house = new_list[2]
+        cohort = new_list[4]
+        if house == "":
+            if cohort == "I":
+                instructors.append(last_name)
+            else:
+                ghosts.append(last_name)
+        else:
+            if house.upper()[0] == "G":
+                gryffindor.append(last_name)
+            elif house.upper()[0] == "H":
+                hufflepuff.append(last_name)
+            elif house.upper()[0] == "S":
+                slytherin.append(last_name)
+            elif house.upper()[0] == "R":
+                ravenclaw.append(last_name)
+            else:
+                dumbledores_army.append(last_name)
+
+
+    # all_hogwarts = [dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin.sort(), ghosts.sort(), instructors.sort()]
+    # for unsorted_house in all_hogwarts:
+    #     unsorted_house.sort()
+
+    #sorted_houses = [house.sort() for house in all_hogwarts]
 
     return all_hogwarts
 
