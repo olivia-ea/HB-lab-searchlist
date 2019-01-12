@@ -124,13 +124,13 @@ def hogwarts_by_house(filename):
                 dumbledores_army.append(last_name)
 
 
-    # all_hogwarts = [dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin.sort(), ghosts.sort(), instructors.sort()]
+    all_hogwarts = [dumbledores_army, gryffindor, hufflepuff, ravenclaw, slytherin, ghosts, instructors]
     # for unsorted_house in all_hogwarts:
     #     unsorted_house.sort()
 
-    #sorted_houses = [house.sort() for house in all_hogwarts]
+    sorted_houses = [sorted(filled_house) for filled_house in all_hogwarts]
 
-    return all_hogwarts
+    return sorted_houses
 
 
 def all_students_tuple_list(filename):
@@ -147,6 +147,20 @@ def all_students_tuple_list(filename):
     """
 
     student_list = []
+
+    the_data = open(filename)
+    for line in the_data:
+        line = line.rstrip()
+        student_info = line.split("|") #'Harry', 'Potter', 'Gryffindor', 'McGonagall', 'Fall 2015')
+        student = ' '.join(student_info[0:2]) #student = Harry Potter
+        house = student_info[2]
+        advisor = student_info[3]
+        cohort = student_info[4]
+        student_tuple = (student, house, advisor, cohort) 
+        #if cohort != "I" and cohort != "G":
+        if cohort not in ("I", "G"):
+            student_list.append(student_tuple)
+
 
     # Code goes here
 
@@ -173,9 +187,20 @@ def find_cohort_by_student_name(student_list):
 
     """
 
-    # Code goes here
-
-    return "Student not found."
+    search_student = input("Who are you looking for?")
+    #if search_student in student_list[i][i]
+    student_present = False
+    for student_tuple in student_list:
+        student = student_tuple[0]
+        cohort = student_tuple[3]
+        if student_tuple[0] == search_student:
+            student_present = True
+            
+            break
+    if student_present:
+        print('{} was in the {} cohort.'.format(student, cohort))
+    else:
+        print('Student not found.')
 
 
 ##########################################################################################
